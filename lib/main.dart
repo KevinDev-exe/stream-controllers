@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'core/theme/app_theme.dart';
 import 'features/coffee_orders/presentation/pages/coffee.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CoffeeApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CoffeeApp extends StatelessWidget {
+  const CoffeeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Control de Pedidos - Cafetería',
+      title: 'Coffee Orders Manager',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.brown,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       home: const CoffeePage(),
     );
   }

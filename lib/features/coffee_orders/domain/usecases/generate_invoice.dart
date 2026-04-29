@@ -1,11 +1,11 @@
 import '../repositories/coffee_order_repository.dart';
 
-class NextOrderStatus {
+class GenerateInvoice {
   final CoffeeOrderRepository repository;
 
-  NextOrderStatus(this.repository);
+  GenerateInvoice(this.repository);
 
   void call(int orderId) {
-    repository.nextStatus(orderId);
+    repository.generateInvoice(orderId);
   }
 }
