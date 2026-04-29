@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/currency_helper.dart';
 import '../../domain/entities/invoice.dart';
+import '../../data/services/invoice_pdf_service.dart';
 
 class InvoiceCard extends StatelessWidget {
   final Invoice invoice;
@@ -101,17 +102,29 @@ class InvoiceCard extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             OutlinedButton.icon(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Factura generada correctamente. solo es un mensaje porfe ',
+              onPressed: () async {
+                try {
+                  await InvoicePdfService().downloadInvoice(invoice);
+
+                  if (!context.mounted) return;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Factura PDF guardada correctamente.'),
                     ),
-                  ),
-                );
+                  );
+                } catch (error) {
+                  if (!context.mounted) return;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error al guardar la factura: $error'),
+                    ),
+                  );
+                }
               },
               icon: const Icon(Icons.download),
-              label: const Text('Simular descarga de factura'),
+              label: const Text('Descargar factura PDF'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.brown,
                 minimumSize: const Size(double.infinity, 50),
